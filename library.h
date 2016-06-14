@@ -25,6 +25,7 @@
 using namespace std;
 
 
+
 class library;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -131,7 +132,7 @@ private:
     vector<book> books;
     vector<genre> genres;
     vector<room> rooms;
-    string downloadedBook = "No book is downloaded";
+    string downloadedBook = "***No book is downloaded***";
     ofstream history;
     
 public:
@@ -204,7 +205,15 @@ public:
         cout << "Enter a genre" << endl;
         cin >> S;
         i = findGenre(S);
-        if ((i >= 0) && (j >= 0)) {
+        
+        
+        
+        if (i < 0) {
+            throw "There is no such";
+        }
+        genres[i].addBooks(i);
+        
+        /*if ((i >= 0) && (j >= 0)) {
             genres[i].addBooks(i);
         } else {
             if (j >= 0) {
@@ -212,6 +221,7 @@ public:
                 books.erase(books.end());
             }
         }
+        */
         
         history << "add book" << endl;
         
@@ -221,7 +231,18 @@ public:
     {
         int i;
         i = findBook(nam);
-        if (i >= 0) {
+        
+        if (i < 0) {
+            throw "There is no books named like that";
+        }
+        
+        books.erase(books.begin() + i); // deleting element
+        for (i ; i < books.size(); i++) // decrement index
+        {
+            books[i].setIndex(books[i].getIndex() - 1);
+        }
+
+        /*if (i >= 0) {
             books.erase(books.begin() + i); // deleting element
             for (i ; i < books.size(); i++) // decrement index
             {
@@ -229,7 +250,7 @@ public:
             }
         } else {
             cout << "There is no books named " << nam << endl;
-        }
+        }*/
         
         history << "delete Book" << endl;
     }
@@ -238,11 +259,17 @@ public:
     {
         int i;
         i = findBook(nam);
-        if (i >= 0) {
+        
+        if (i < 0) {
+            throw "There is no books named like that";
+        }
+        cout << books[i].getText() << endl;
+        
+        /*if (i >= 0) {
             cout << books[i].getText() << endl;
         } else {
             cout << "There is no books named " << nam << endl;
-        }
+        }*/
         
         history << "print Book" << endl;
     }
@@ -260,11 +287,16 @@ public:
                 break;
             }
         }
-        if (err == true) {
+        
+        if (err == false) {
+            throw "There is no books named like that";
+        }
+        
+        /*if (err == true) {
             cout << "The book is Downloaded" << endl;
         } else {
             cout << "There is no books named " << nam << endl;
-        }
+        }*/
         
         history << "download Book" << endl;
     }
@@ -329,11 +361,16 @@ public:
         i = findGenre(nam);
         j = findBook(nameOfBook);
         
-        if ((i >= 0) && (j >= 0)) {
+        if ((i < 0) || (j < 0)) {
+            throw "There is no such genres or books";
+        }
+        genres[i].addBooks(j);
+        
+        /*if ((i >= 0) && (j >= 0)) {
             genres[i].addBooks(j);
         } else {
             cout << "There is no such genres or books" << endl;
-        }
+        }*/
         
         history << "assign genere" << endl;
     }
@@ -351,13 +388,20 @@ public:
     {
         int i = findGenre(nam);
         
-        if ((i >= 0) && (genres[i].getBooks() != "")) {
+        if ((i < 0) || (genres[i].getBooks() == "")) {
+            throw "There is no such genre of this genre is empty";
+        }
+        for (int j = 0; j < genres[i].getBooks().length(); i++) {
+            cout << books[(genres[i].getBooks()).length()].getName() << endl;
+        }
+        
+        /*if ((i >= 0) && (genres[i].getBooks() != "")) {
             for (int j = 0; j < genres[i].getBooks().length(); i++) {
                 cout << books[(genres[i].getBooks()).length()].getName() << endl;
             }
         } else {
             cout << "There is no such genre of this genre is empty" << endl;
-        };
+        };*/
         
         history << "print All Book Of This Genre" << endl;
     }
@@ -394,12 +438,19 @@ public:
     {
         int i;
         i = findRoom(nam);
-        if (i >= 0) {
+        
+        if (i < 0) {
+            throw "There is no books named ";
+        }
+        rooms.erase(rooms.begin() + i); // deleting element
+        for (i ; i < rooms.size(); i++) {rooms[i].setIndex(rooms[i].getIndex() - 1);} // decrement index
+        
+        /*if (i >= 0) {
             rooms.erase(rooms.begin() + i); // deleting element
             for (i ; i < rooms.size(); i++) {rooms[i].setIndex(rooms[i].getIndex() - 1);} // decrement index
         } else {
             cout << "There is no books named " << nam << endl;
-        }
+        }*/
         
         history << "delete room" << endl;
     }
@@ -410,11 +461,16 @@ public:
         i = findRoom(nameOfRoom);
         j = findBook(nameOfBook);
         
-        if ((i >= 0) && (j >= 0)) {
+        if ((i < 0) || (j < 0)) {
+            throw "There is no such rooms or books";
+        }
+        rooms[i].addBooks(j);
+        
+        /*if ((i >= 0) && (j >= 0)) {
             rooms[i].addBooks(j);
         } else {
             cout << "There is no such rooms or books" << endl;
-        }
+        }*/
         
         history << "put the book" << endl;
     }
@@ -426,12 +482,18 @@ public:
         j = findRoom(inRoom);
         k = findBook(book);
         
-        if ((i >= 0) && (j >= 0) && (k >= 0)) {
+        if ((i < 0) || (j < 0) || (k < 0)) {
+            throw "There is no such rooms or books";
+        }
+        rooms[i].eraseBook(k);
+        rooms[j].addBooks(k);
+        
+        /*if ((i >= 0) && (j >= 0) && (k >= 0)) {
             rooms[i].eraseBook(k);
             rooms[j].addBooks(k);
         } else {
             cout << "There is no such rooms or books" << endl;
-        }
+        }*/
         
         history << "move the book" << endl;
     }
