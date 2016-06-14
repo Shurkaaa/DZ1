@@ -20,18 +20,27 @@ using namespace std;
 
 int main(int argc, const char * argv[]) {
     
-    string text;
+    string text, nam;
     library lib;
     
     cout << "press 'exit' to end program" << endl;
     text = "";
+    nam = "";
     
     while (text != "exit") {
         cout << "Enter command : " << endl;
         getline(cin, text);
         
         if (text == "exit") {break;}
-        else {if (text == "add book") {lib.addBook();} }
+        
+        if (text == "add book") {
+            try {
+                lib.addBook();
+            } catch (const char *str) {
+                cout << str << endl;
+                lib.deleteBook(nam);
+            }
+        }
         
         
         
@@ -45,17 +54,31 @@ int main(int argc, const char * argv[]) {
             string nam;
             cout << "enter the book name" << endl;
             cin >> nam;
-            lib.deleteBook(nam);
+            try {
+                lib.deleteBook(nam);
+            } catch (const char *str) {
+                cout << str << endl;
+            }
         }
         
         if (text == "delete room") {
             string nam;
             cout << "enter the room name" << endl;
             cin >> nam;
-            lib.deleteRoom(nam);
+            try {
+                lib.deleteRoom(nam);
+            } catch (const char *str) {
+                cout << str << endl;
+            }
         }
         
         if (text == "download book") {
+            try {
+                lib.downloadBook();
+                cout << "The book is Downloaded";
+            } catch (const char *str) {
+                cout << str << endl;
+            }
             lib.downloadBook();
         }
         
@@ -76,7 +99,11 @@ int main(int argc, const char * argv[]) {
             cin >> secondRoom;
             cout << "Enter the name of the book" << endl;
             cin >> book;
-            lib.moveTheBook(firstRoom, secondRoom, book);
+            try {
+                lib.moveTheBook(firstRoom, secondRoom, book);
+            } catch (const char *str) {
+                cout << str << endl;
+            }
         }
         
         if (text == "open downloaded book") {
@@ -87,7 +114,11 @@ int main(int argc, const char * argv[]) {
             string nam;
             cout << "Enter the name of the genre" << endl;
             cin >> nam;
-            lib.printAllBookOfThisGenre(nam);
+            try {
+                lib.printAllBookOfThisGenre(nam);
+            } catch (const char *str) {
+                cout << str << endl;
+            }
         }
         
         if (text == "print all books") {
@@ -106,7 +137,11 @@ int main(int argc, const char * argv[]) {
             string nam;
             cout << "Enter the name of the book" << endl;
             cin >> nam;
-            lib.printBook(nam);
+            try {
+                lib.printBook(nam);
+            } catch (const char *str) {
+                cout << str << endl;
+            }
         }
         
         if (text == "put the book") {
@@ -115,10 +150,28 @@ int main(int argc, const char * argv[]) {
             cin >> book;
             cout << "Enter the name of the room" << endl;
             cin >> room;
-            lib.putTheBook(book, room);
-            
-        text = "";
+            try {
+                lib.putTheBook(book, room);
+            } catch (const char *str) {
+                cout << str << endl;
+            }
         }
+        
+        if (text == "assign genre") {
+            string book, genre;
+            cout << "Enter the name of the book" << endl;
+            cin >> book;
+            cout << "Enter the name of the genre" << endl;
+            cin >> genre;
+            try {
+                lib.assignGenre(book, genre);
+            } catch (const char *str) {
+                cout << str << endl;
+            }
+        }
+        
+        text = "";
+        
     }
     
     return 0;
