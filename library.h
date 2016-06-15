@@ -52,6 +52,7 @@ public:
     string getName()  {return name;}
     unsigned long getIndex()  {return index;}
     
+    /*
     void digitize()
     {
         if (digital == false) {
@@ -60,6 +61,7 @@ public:
             cout << "The book is already digitized!" << endl;
         }
     }
+    */
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -194,12 +196,18 @@ public:
         cout << "Enter a room name to put there a book" << endl;
         cin >> S;
         i = findRoom(S);
-        if (i >= 0) {
+        
+        if (i < 0) {
+            throw "There is no such rooms";
+        }
+        rooms[i].addBooks(i);
+        
+        /*if (i >= 0) {
             rooms[i].addBooks(i);
         } else {
             cout << "There is no such rooms" << endl;
             books.erase(books.end());
-        }
+        }*/
         
         j = i;
         cout << "Enter a genre" << endl;
