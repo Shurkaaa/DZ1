@@ -51,17 +51,6 @@ public:
     string getText()  {return text;}
     string getName()  {return name;}
     unsigned long getIndex()  {return index;}
-    
-    /*
-    void digitize()
-    {
-        if (digital == false) {
-            digital = true;
-        } else {
-            cout << "The book is already digitized!" << endl;
-        }
-    }
-    */
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
